@@ -8,6 +8,7 @@ Asegúrate de tener instalado NASM (ensamblador) en tu sistema. Puedes instalarl
 
 ```bash
 sudo apt-get install nasm
+```
 
 ## Compilación
 
@@ -16,14 +17,18 @@ sudo apt-get install nasm
 
 ```bash
 nasm -f elf mi_programa.asm
+```
 
 Esto generará un archivo objeto llamado mi_programa.o.
 Luego, enlaza el archivo objeto para crear un ejecutable con el siguiente comando:
 
 ```bash
 ld -m elf_i386 -s -o mi_programa mi_programa.o
+```
 
 Ejecución
 Una vez que se haya creado el ejecutable, puedes ejecutarlo con el siguiente comando:
 
-bash
+```bash
+./mi_programa
+```
