@@ -1,7 +1,6 @@
 section .data
     vector dd 1, 2, 3, 4, 5, 6, 7, 8  ; Vector de ejemplo con valores iniciales
     vector_size equ 8  ; Tamaño del vector
-    result_msg db "El resultado del producto escalar es: ", 0
 
 section .bss
     result resd 1  ; Almacenar el resultado del producto escalar
@@ -18,9 +17,6 @@ _start:
 
     ; Llamar a la función para realizar el producto escalar
     call ProductoEscalar
-
-    ; Imprimir el resultado del producto escalar
-    call ImprimirResultado
 
     ; Salir del programa
     mov eax, 1
@@ -44,22 +40,5 @@ ProductoEscalar:
 
     ; Almacenar el resultado en la variable 'result'
     mov [result], eax
-
-    ret
-
-ImprimirResultado:
-    ; Esta función imprime el resultado del producto escalar en la consola
-
-    mov eax, 4
-    mov ebx, 1
-    mov ecx, result_msg
-    mov edx, 33  ; Longitud del mensaje (incluyendo el resultado y el espacio)
-    int 0x80
-
-    mov eax, 4
-    mov ebx, 1
-    mov ecx, result
-    mov edx, 10  ; Longitud del resultado
-    int 0x80
 
     ret
