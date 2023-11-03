@@ -10,7 +10,7 @@ Asegúrate de tener instalado NASM (ensamblador) en tu sistema. Puedes instalarl
 sudo apt-get install nasm
 ```
 
-## Compilación
+## Compilación ASM
 
 1. Abre una terminal en el directorio donde se encuentra el archivo `mi_programa.asm`.
 2. Ejecuta el siguiente comando para ensamblar el código:
@@ -24,6 +24,22 @@ Luego, enlaza el archivo objeto para crear un ejecutable con el siguiente comand
 
 ```bash
 ld -m elf_i386 -s -o mi_programa mi_programa.o
+```
+
+Ejecución
+Una vez que se haya creado el ejecutable, puedes ejecutarlo con el siguiente comando:
+
+```bash
+./mi_programa
+```
+
+## Compilación C
+
+1. Abre una terminal en el directorio donde se encuentra el archivo `mi_programa.c`.
+2. Ejecuta el siguiente comando para compilar el código c `mi_programa_c.c`junto con el objeto_ams.o `mi_programa_asm.o`:
+
+```bash
+gcc -o mi_programa mi_programa.c mi_programa_asm.o
 ```
 
 Ejecución
