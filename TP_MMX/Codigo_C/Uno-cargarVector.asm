@@ -1,57 +1,18 @@
 section .data
-vector db 1, 2, 3, 4, 5, 6, 7, 8  ; Vector de 8 elementos
-result_msg db "El resultado es: ", 0
-newline db 10  ; Salto de línea
-
-section .bss
-result resb 32  ; Almacenar el resultado como cadena de caracteres
+    mmx_register dq 0
 
 section .text
-global _start
+global procesarVector
 
-_start:
-    ; Cargar el vector en el registro MM0
-    movq mm0, qword [vector]
-
-    ; Inicializar el contador y el resultado en MM1
-    pxor mm1, mm1
-    mov ecx, 8  ; Número de elementos en el vector
+procesarVector:
+    movq mm0, [rdi]           ; Cargar el primer valor del vector en el registro MMX
+    pxor mm1, mm1             ; Limpiar el registro MM1 para usarlo como contador
 
 loop_start:
-    ; Realizar la operación deseada aquí (por ejemplo, sumar los elementos)
-    paddb mm1, [vector + ecx - 1]
+    paddb mm0, mm1            ; Sumar el valor del contador a los elementos en mm0
+    add rdi, 8                ; Avanzar al siguiente segmento del vector
+    dec rsi                   ; Decrementar la longitud del vector
 
-    ; Decrementar el contador
-    dec ecx
-    jnz loop_start  ; Saltar si el contador no es cero
+    jnz loop_start            ; Si no hemos terminado, repetir el ciclo
 
-    ; Almacenar el resultado en la variable 'result' como una cadena de caracteres
-    movq [result], mm1
-
-    ; Imprimir el mensaje "El resultado es:"
-    mov eax, 4
-    mov ebx, 1
-    mov ecx, result_msg
-    mov edx, 17  ; Longitud del mensaje
-    int 0x80
-
-    ; Imprimir el resultado como una cadena de caracteres
-    mov eax, 4
-    mov ebx, 1
-    mov ecx, result
-    mov edx, 32  ; Longitud máxima de la cadena de caracteres
-    int 0x80
-
-    ; Agregar un salto de línea
-    mov eax, 4
-    mov ebx, 1
-    mov ecx, newline
-    mov edx, 1
-    int 0x80
-
-    ; Limpiar registros MMX antes de salir
-    emms
-
-    ; Salir del programa
-    mov eax, 1  ; Código de salida (1)
-    int 0x80
+    ret

@@ -1,29 +1,28 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <emmintrin.h>
 
-extern void ProductoEscalar(char *vector, int n);  // Declaración de la función en ensamblador
+extern void procesarVector(int8_t *vector, int length);
+
+void printMMX(__m64 mmx_register, int length) {
+    int8_t* bytes = (int8_t*)&mmx_register;
+    printf("Contenido del registro MMX: ");
+    for (int i = 0; i < length; i++) {
+        printf("%d ", bytes[i]);
+    }
+    printf("\n");
+}
 
 int main() {
-    char vector[] = {1, 2, 3, 4, 5, 6, 7, 8};  // Vector de ejemplo con valores iniciales
-    int n = 5;  // Valor n
 
-    ProductoEscalar(vector, n);  // Llama a la función en ensamblador
+    // como los registros MMX solo soportan 8 bytes podemos ingresar 8 elementos como maximo
+    int8_t vector[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int length = sizeof(vector) / sizeof(vector[0]);
 
-    // Accede al resultado desde la variable 'result' en ensamblador
-    int resultado;
-    asm("movl result, %0" : "=r"(resultado));
+    procesarVector(vector, length);
 
-    // Imprime el resultado
-    printf("El resultado del producto escalar es: %d\n", resultado);
+    // Llamamos a una función para imprimir el contenido del registro MMX
+    printMMX(*(__m64*)vector, length);
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
