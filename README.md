@@ -16,7 +16,7 @@ sudo apt-get install nasm
 2. Ejecuta el siguiente comando para ensamblar el código:
 
 ```bash
-nasm -f elf mi_programa.asm
+nasm -f elf64 mi_programa.asm
 ```
 
 Esto generará un archivo objeto llamado mi_programa.o.
@@ -39,7 +39,8 @@ Una vez que se haya creado el ejecutable, puedes ejecutarlo con el siguiente com
 2. Ejecuta el siguiente comando para compilar el código c `mi_programa_c.c`junto con el objeto_ams.o `mi_programa_asm.o`:
 
 ```bash
-gcc -o mi_programa mi_programa.c mi_programa_asm.o
+gcc -o mi_programa_ejecutable mi_programa_C.c mi_programa_objet.o -no-pie
+
 ```
 
 Ejecución
