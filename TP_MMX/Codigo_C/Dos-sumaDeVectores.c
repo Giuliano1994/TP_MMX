@@ -3,15 +3,9 @@
 #include <emmintrin.h>
 
 extern void procesarVector(int8_t *vector, int length);
+extern __m64 mmx_register;  // Aquí está la declaración de mmx_register
 
-void printMMX(__m64 mmx_register, int length) {
-    int8_t* bytes = (int8_t*)&mmx_register;
-    printf("Contenido del registro MMX: ");
-    for (int i = 0; i < length; i++) {
-        printf("%d ", bytes[i]);
-    }
-    printf("\n");
-}
+__m64 mmx_register;  // Aquí está la definición de mmx_register
 
 int main() {
 
@@ -21,8 +15,15 @@ int main() {
 
     procesarVector(vector, length);
 
-    // Llamamos a una función para imprimir el contenido del registro MMX
-    printMMX(*(__m64*)vector, length);
+    // Sumamos los elementos del registro MMX
+    int8_t* bytes = (int8_t*)&mmx_register;
+    int sum = 0;
+    for (int i = 0; i < 8; i++) {
+        sum += bytes[i];
+    }
+
+    // Imprimimos la suma
+    printf("La suma de los elementos del vector es: %d\n", sum);
 
     return 0;
 }
