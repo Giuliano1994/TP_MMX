@@ -1,21 +1,11 @@
-section .data
- 
-    mmx_register dq 0
-
 section .text
-global procesarVector
+global SumarVectores
 
-procesarVector:
-    pxor mm0, mm0             ; Limpiar el registro MM0 para usarlo como acumulador
+SumarVectores:
+    movdqu xmm0, [rdi]       ; Cargar los primeros 16 bytes de vectorA en xmm0
+    movdqu xmm1, [rsi]       ; Cargar los primeros 16 bytes de vectorB en xmm1
+    paddb xmm0, xmm1         ; Sumar los elementos de xmm0 y xmm1 (SSE)
 
-loop_start:
-    movd mm1, [rdi]           ; Cargar un byte del vector en el registro MM1
-    paddb mm0, mm1            ; Sumar el valor del contador al acumulador en mm0
-    add rdi, 1                ; Avanzar al siguiente byte del vector
-    dec rsi                   ; Decrementar la longitud del vector
+    movdqu [rdx], xmm0       ; Almacenar el resultado en vectorResult
 
-    jnz loop_start            ; Si no hemos terminado, repetir el ciclo
-
-    movq [mmx_register], mm0  ; Mover el resultado al espacio de memoria 'mmx_register'
-    emms                      ; Limpiar el estado multimedia
     ret
