@@ -8,5 +8,15 @@ productoEscalar:
 
     pmulld xmm2, xmm1         ; Multiplicar los elementos del vector por n (SSE2)
 
+    paddw xmm2, xmm2
     movq rax, xmm2            ; Mover el resultado a rax
     ret
+
+
+
+
+
+    (valor1, valr ......valor8)
+
+    (2, cosas, cosas, cosas -...)
+    (1,2,3, cosas, coasa .....)

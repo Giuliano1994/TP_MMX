@@ -1,14 +1,14 @@
 #include <stdio.h>
 
-extern int productoEscalar(char *vector, int n);
+extern long long productoEscalar(long long *escalar, long long *vector);
 
 int main() {
-    char vector[] = {1, 2, 3};
-    int n = 2;
+    long long vector[] = {1, 2, 3};
+    long long  escalar[]= {2, 2, 2};
 
-    int resultado = productoEscalar(vector, n);
+    long long resultado = productoEscalar(escalar, vector);
 
-    printf("Resultado del producto escalar: %d\n", resultado);
+    printf("Resultado del producto escalar: %dll\n", resultado);
 
     return 0;
 }
